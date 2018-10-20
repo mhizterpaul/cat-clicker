@@ -19,7 +19,7 @@ This repo was created for the sole purpose of practicing design patterns and the
 
 * [cat-clicker-duo](https://mhizterpaul.github.io/cat-clicker/cat-clicker-duo.html)
 
-* [cat-clicker-pro](https://mhizterpaul.github.io/cat-clicker/cat-clicker-pro.html)
+* [cat-clicker-premium](https://mhizterpaul.github.io/cat-clicker/cat-clicker-premium.html)
 
 * [cat-clicker-premium-pro](https://mhizterpaul.github.io/cat-clicker/cat-clicker-premium-pro.html)
 
