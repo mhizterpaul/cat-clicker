@@ -1,6 +1,6 @@
 # Cat Clicker
 
-#### _ This app uses the mv* design pattern_
+#### _This app uses the mv* design pattern_
 
 ## Introduction
 
