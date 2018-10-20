@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>catclicker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+    	html, body{
+    		border: 0;
+    		padding: 0;
+    		font: 50px sans-serif;
+    		text-align: center;
+    	}
+    	img {
+    		width: 100%;
+    		max-width: 640px;
+    		vertical-align: middle; 
+    		margin: 30px auto 30px auto;
+    		border-radius: 8px;
+    		display: block;
+    	}
+    </style>
+</head>
+<body>
+	<script type="text/javascript">
+        (function(){
+        	const cat = new Image(), p = document.createElement('p');
+        	let click = 0;
+        	cat.src = 'cat1.jpg';
+        	cat.alt = 'a cute cat staring into space';
+        	p.textContent = click;
+        	cat.addEventListener('click', function(){
+        		click++;
+        		p.textContent = click;
+        		p.prepend(cat);
+        	});
+        	p.prepend(cat);
+    	document.body.appendChild(p)})();
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>catclicker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+    	html, body{
+    		border: 0;
+    		padding: 0;
+    		font: 50px sans-serif;
+    		text-align: center;
+    	}
+    	img {
+    		width: 100%;
+    		max-width: 640px;
+    		vertical-align: middle; 
+    		margin: 30px auto 30px auto;
+    		border-radius: 8px;
+    		display: block;
+    	}
+        section {
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+<body>
+	<script type="text/javascript">
+        (function(){
+        	class cat {
+                constructor(name = undefined, src = 'cat1.jpg') {
+                    this.src = src;
+                    this.name = name;
+                    this.click = 0;
+                    this.container = new Image();
+                    this.nameContainer = document.createElement('p');
+                    this.clickContainer = document.createElement('p');
+                }
+                initImg (){
+                    this.container.src = this.src;
+                    this.container.alt = 'image of cat';
+                    this.nameContainer.textContent = this.name;
+                    this.clickContainer.textContent = this.click;
+                }
+
+                clickListener() {
+                    this.click++;
+                }
+        }
+
+        const cats = [new cat('james') , new cat('john', '1.jpg')];
+        
+        const catContainer = document.createElement('section');
+         let i = 0;
+
+        for (const cat of cats ){
+            cat.initImg();
+            cat.container.className = i;
+            catContainer.appendChild(cat.nameContainer);
+            catContainer.appendChild(cat.container);
+            catContainer.appendChild(cat.clickContainer);
+            i++;
+        }
+
+        catContainer.addEventListener('click', function(evt){
+            if( evt.target.previousElementSibling ) {
+                const idx = Number(evt.target.className);
+
+            		if(evt.target.tagName === 'IMG'){
+                        if (idx < cats.length-1 ){
+                            cats[idx].clickListener();
+                            cats[idx].initImg();
+                            catContainer.insertBefore(cats[idx].clickContainer, cats[idx+1].nameContainer);
+                        }else{
+                            cats[idx].clickListener();
+                            cats[idx].initImg();
+                            catContainer.appendChild(cats[idx].clickContainer);
+                        } 
+                       
+                    }
+            }
+        	});
+        	document.body.appendChild(catContainer)})();
+    </script>
+</body>
+</html>

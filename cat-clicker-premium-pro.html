@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>catclicker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+    	html, body{
+    		border: 0;
+    		padding: 0;
+    		font: 50px sans-serif;
+    		text-align: center;
+    	}
+
+    	img {
+    		width: 70%;
+    		max-width: 640px;
+    		vertical-align: middle; 
+    		margin: auto;
+    		border-radius: 8px;
+    	}
+
+        section:first-of-type {
+        	margin-top: 0;
+            text-transform: capitalize;
+            width: 70%;
+        }
+
+        ul {
+        	list-style-type: none;
+        	font-size: 20px;
+        	text-decoration: underline;
+        	color: blue;
+        	float: right;
+        	width: 30%;
+        	margin-bottom: 10px;
+        	margin-top: 10px;
+        }
+
+        form {
+        	width: 100%;
+        	float: right;
+        	position: absolute;
+        	top: 100%;
+        	left: 0;
+        	text-align: left;
+
+        }
+
+        section:last-of-type{
+        	width: 30%;
+        	float: right;
+        	transform: translateY(-40vw);
+        }
+
+        section input {
+        	position: relative;
+        }
+
+        form input {
+        	margin-bottom: 10px;
+        	display: block;
+        }
+
+        form input:first-child {
+        	margin-top: 10px;
+        }
+
+        form input:nth-child(4){
+        	margin-top: 0;
+        	margin-right: 5px;
+        }
+
+        form input:nth-child(4), form input:nth-child(5) {
+        	display: inline-block;
+        }
+    </style>
+</head>
+<body>
+	<script type="text/javascript">
+		(function(){
+			const model = {
+				currentCat: 0,
+				cats: [
+				{
+					name: 'sussy', src: 'cat1.jpg', count: 0 }, 
+					{name: 'furry', src: '1.jpg', count: 0 }, 
+					{name: 'purr', src: '2.jpg', count: 0 }, 
+					{name: 'john', src: '3.jpg', count: 0 }, 
+					{name: 'micheal', src: '4.jpg', count: 0 }]
+
+			};
+
+			const octopus = {
+
+				isviewThree: false,
+				cats: model.cats.length,
+				setIdx: function(idx){
+					model.currentCat = idx;
+					this.render();
+				},
+				idx: function(){
+					return model.currentCat
+				},
+				cat: function(idx){
+					return model.cats[idx];
+				},
+				init: function() {
+					view.init();
+					viewTwo.init();
+					viewThree.init();
+					this.render();
+				},
+				increaseClick: function(){
+					model.cats[model.currentCat].count += 1;
+				},
+				setCat: function(prop, value){
+					model.cats[this.idx()][prop] = value;
+				},
+				render: function(){
+					view.render(this.idx());
+					viewTwo.render(this.cat(this.idx()));
+					viewThree.render();
+				}
+			};
+
+
+			const view = {
+				init: function(){
+
+							const ul = document.createElement('ul');
+							for( let i = 0; i < octopus.cats; i++ ){
+								const li = document.createElement('li');
+								li.className = i;
+								li.textContent = octopus.cat(i).name;
+								ul.appendChild(li);
+							};
+							ul.addEventListener('click', function(evt){
+									if (evt.target.tagName === 'LI'){
+										octopus.setIdx(Number(evt.target.className));
+									}
+							});
+							document.body.appendChild(ul);
+						},
+						render: function(idx){
+							document.getElementsByTagName('li')[idx].textContent = octopus.cat(idx).name;
+						}
+
+			};
+
+
+			const viewTwo = {
+				section: document.createElement('section'),
+				nameContainer: document.createElement('p'),
+				img: new Image(),
+				clickContainer: document.createElement('p'),
+				init: function() {
+					this.img.alt = 'cute cat';
+					this.img.addEventListener('click', function clickListener (evt) {
+						octopus.increaseClick();
+						octopus.render();
+					});
+					this.section.appendChild(this.nameContainer);
+					this.section.appendChild(this.img);
+					this.section.appendChild(this.clickContainer);
+					document.body.appendChild(this.section);
+				},
+				render: function(cat) {
+					this.nameContainer.textContent = cat.name;
+					this.img.src = cat.src;
+					this.clickContainer.textContent = cat.count;
+				}
+			};
+
+
+			const viewThree = {
+				form: document.createElement('form'),
+				init: function(){
+					this.form.action = '#';
+					this.form.method = 'get';
+					const section = document.createElement('section');
+					const button = document.createElement('input');
+					button.type = 'button';
+					button.value = 'Admin';
+					for(let i = 0; i < 5; i++){
+						const input = document.createElement('input');
+						switch (i) {
+							case 0:
+							input.type = 'text';
+							input.value = octopus.cat(octopus.idx()).name;
+							break;
+							case 1:
+							input.type = 'text';
+							input.value = octopus.cat(octopus.idx()).src;
+							break;
+							case 2:
+							input.type = 'number';
+							input.value = octopus.cat(octopus.idx()).count;
+							break;
+							case 3:
+							input.type = 'submit';
+							break;
+							case 4: 
+							input.type = 'button';
+							input.value = 'cancel';
+							input.addEventListener('click', function(){
+								viewThree.form.remove();
+								octopus.isviewThree = false;
+							});
+							}
+						this.form.appendChild(input);
+					}
+					button.addEventListener('click', function addForm(sectionCopy) {
+							return function(){
+								if(octopus.isviewThree){
+								viewThree.form.remove();
+								octopus.isviewThree = false;
+								}else{
+									sectionCopy.appendChild(viewThree.form);
+									octopus.isviewThree = true;
+									octopus.render();
+								}
+
+							}
+						}(section));
+					section.appendChild(button);
+					document.body.appendChild(section);
+
+					this.form.addEventListener('submit', function(evt){
+
+							for (let i = 1; i < 4; i++){
+								const el = document.getElementsByTagName('input')[i];
+								switch (i) {
+									case 1:
+									octopus.setCat('name', el.value);
+									break;
+									case 2: 
+									octopus.setCat('src', el.value);
+									break;
+									case 3:
+									octopus.setCat('count', Number(el.value));
+									}
+							}
+							octopus.render();
+							viewThree.form.remove();
+							octopus.isviewThree = false;
+							evt.preventDefault();
+					});
+				},
+				render: function(){
+					if(octopus.isviewThree) {
+						for (let i = 1; i < 4; i++){
+								const el = document.getElementsByTagName('input')[i];
+								switch (i) {
+									case 1:
+									el.value = octopus.cat(octopus.idx()).name;
+									break;
+									case 2:
+									el.value = octopus.cat(octopus.idx()).src;
+									break;
+									case 3:
+									el.value = octopus.cat(octopus.idx()).count;
+									
+								}
+						}
+					}
+				}
+			};
+			octopus.init()})();
+    </script>
+</body>
+</html>

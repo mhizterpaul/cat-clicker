@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>catclicker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+    	html, body{
+    		border: 0;
+    		padding: 0;
+    		font: 50px sans-serif;
+    		text-align: center;
+    	}
+
+    	img {
+    		width: 100%;
+    		max-width: 640px;
+    		vertical-align: middle; 
+    		margin: 30px auto 30px auto;
+    		border-radius: 8px;
+    		display: block;
+    	}
+
+        section {
+            text-transform: capitalize;
+        }
+
+        ul {
+        	margin-bottom: 50px;
+        	list-style-type: none;
+        	font-size: 20px;
+        	text-decoration: underline;
+        	color: blue;
+        }
+    </style>
+</head>
+<body>
+	<script type="text/javascript">
+		(function() {
+			const section = document.createElement('section');
+			const nameContainer = document.createElement('p');
+			nameContainer.textContent = 'sussy';
+			const img = new Image();
+			img.alt = 'cute cat';
+			img.src = 'cat1.jpg';
+			img.className = '0';
+			const clickContainer = document.createElement('p');
+			clickContainer.textContent = '0';
+
+			const cats = [{name: 'sussy', src: 'cat1.jpg', count: 0 }, {name: 'furry', src: '2.jpg', count: 0 }, {name: 'purr', src: '3.jpg', count: 0 }, {name: 'john', src: '4.jpg', count: 0 }, {name: 'micheal', src: '5.jpg', count: 0 }];
+
+			const ul = document.createElement('ul');
+			for( let i = 0; i < cats.length; i++ ){
+				const li = document.createElement('li');
+				li.className = i;
+				li.textContent = cats[i].name;
+				ul.appendChild(li);
+			}
+			ul.addEventListener('click', function(evt){
+				if (evt.target.tagName === 'LI'){
+					img.src = cats[Number(evt.target.className)].src;
+					img.className = evt.target.className;
+					nameContainer.textContent = cats[Number(evt.target.className)].name;
+					clickContainer.textContent = cats[Number(evt.target.className)].count;
+
+				}
+			});
+
+			section.addEventListener('click', function(evt){
+				if(evt.target.tagName === 'IMG'){
+					cats[Number(evt.target.className)].count += 1;
+					clickContainer.textContent = cats[Number(evt.target.className)].count;
+				}
+			});
+			document.body.appendChild(ul);
+			section.appendChild(nameContainer);
+			section.appendChild(img);
+			section.appendChild(clickContainer);
+			document.body.appendChild(section)})();
+    </script>
+</body>
+</html>
